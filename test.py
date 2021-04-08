@@ -6,16 +6,17 @@
 @LastEditTime: 2019-12-04 00:45:05
 @LastEditors: 
 '''
-import sys
 
-str1 = input()
-str2 = input()
-for s in [str1, str2]:
-    if len(s) < 8:
-        print(s+"0"*(8-len(s)))
-    for i in range(0,len(s)//8+1):
-        curs = s[i*8:(i+1)*8]
-        if len(curs)<8:
-            print(curs+"0"*(8-len(curs)))
-        else:
-            print(curs)
+import tensorflow as tf
+
+physical_devices = tf.config.list_physical_devices("GPU")
+for i in range(len(physical_devices)):
+    tf.config.experimental.set_memory_growth(physical_devices[i], True)
+strategy = tf.distributions.OneDeviceStrategy(device="/gpu:0")
+
+with strategy.scope():
+    a = tf.ones([1,5,5])
+    b = tf.ones([1,5,10])
+    c = tf.nn.matmul(a, b)
+    print(c.device)
+    print(c)

@@ -81,12 +81,15 @@ class Solution:
         #         idx += 1
         # nums = nums[:idx]
         # return idx
+
         i = 2
-        for j in range(2, len(nums)):
+        size = len(nums)
+        if size <= 2:
+            return size
+        for j in range(2, size):
             if nums[j] != nums[i-2]:
                 nums[i] = nums[j]
                 i += 1
-            print(f"i={i}, j={j}, nums={nums}")
         return i
 
 if __name__ == "__main__":

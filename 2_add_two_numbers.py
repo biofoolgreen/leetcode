@@ -29,27 +29,69 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        ###
-        # wrong answer
-        ###
-        list1 = []
-        list2 = []
-        while l1:
-            list1.append(l1.val)
-            l1 = l1.next
-        while l2:
-            list2.append(l2.val)
-            l2 = l2.next
+        if not l1.val:
+            return l2
+        if not l2.val:
+            return l1
         
-        len1 = len(list1)
-        len2 = len(list2)
-        num1 = int("".join(list1[::-1]))
-        num2 = int("".join(list2[::-1]))
-        add_num = num1 + num2
-        num_str = str(add_num)
-        rev_num_str = num_str[::-1]
-        return [int(n) for n in rev_num_str.split()]
+        init = l1.val + l2.val
+        carry = init // 10
+        reminder = init % 10
+        head = ListNode(reminder)
+        cur = head
+        while l1.next or l2.next:
+            l1 = l1.next if l1.next else ListNode()
+            l2 = l2.next if l2.next else ListNode()
+            tmp = l1.val + l2.val + carry
+            carry = tmp // 10
+            reminder = tmp % 10
+            cur.next = ListNode(reminder)
+            cur = cur.next
+        
+        if carry>0:
+            cur.next = ListNode(carry)
+            cur = cur.next
+        return head             
+
+def addTwoNumbers(l1: List, l2: List) -> List:
+    len1 = len(l1)
+    len2 = len(l2)
+    if len1 == 0:
+        return l2
+    if len2 == 0:
+        return l1
+    
+    total = []
+    carry = 0
+    maxlen = max(len1, len2)
+    for i in range(maxlen):
+        if i > len1-1:
+            tmp = l2[i] + carry
+        elif i > len2-1:
+            tmp = l1[i] + carry
+        else:
+            tmp = l1[i] + l2[i] + carry
+        carry = tmp // 10
+        reminder = tmp % 10
+        total.append(reminder)
+    if carry:
+        total.append(carry)
+    return total
+
 
 
 if __name__ == "__main__":
-    l1 = []
+    # l1_nums = [2,4,3]
+    # l2_nums = [5,6,4]
+    l1_nums = [9,9,9,9,9,9,9]
+    l2_nums = [9,9,9,9]
+    # l1 = ListNode(None)
+    # l2 = ListNode(None)
+    # for i in l1_nums:
+    #     l1.next = i
+    #     l1.val = l1.next
+    # for i in l2_nums:
+    #     l2.next = i
+    #     l2.val = l2.next
+    # print(f"l1={l1}, l2={l2}")
+    print(addTwoNumbers(l1_nums, l2_nums))
