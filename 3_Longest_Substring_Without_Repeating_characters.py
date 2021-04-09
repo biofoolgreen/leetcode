@@ -36,21 +36,31 @@
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        if len(s)<=1:
-            return len(s)
-        dic = {}
-        nxt = 0
-        res = 0
-        for i, ch in enumerate(s):
-            print(i, ch, nxt, res, dic)
-            if ch in dic:
-                nxt = max(dic[ch], nxt)
-            res = max(res, i-nxt+1)
-            dic[ch] = i + 1
-        return res
+        lens = len(s)
+        if lens<=1:
+            return lens
+        
+        slow, fast = 0, 0
+        max_sub = 0
+        substring = ""
+        while fast < lens:
+            if s[fast] in substring:
+                slow += 1
+                if slow == fast:
+                    fast += 1
+            else:
+                fast += 1
+            substring = s[slow:fast]
+            # print(f"slow={slow}, fast={fast}, subs={substring}")
+            max_sub = max(max_sub, fast-slow)
+        return max_sub
+        
+        
 
 
 if __name__ == "__main__":
     s = Solution()
     str1 = "abcabcbb"
-    print(s.lengthOfLongestSubstring(str1))
+    str2 = "pwwkew"
+    str3 = "bbbbbbb"
+    print(s.lengthOfLongestSubstring(str2))
