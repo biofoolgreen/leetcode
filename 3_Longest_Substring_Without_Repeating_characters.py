@@ -36,24 +36,34 @@
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        lens = len(s)
-        if lens<=1:
-            return lens
+        # lens = len(s)
+        # if lens<=1:
+        #     return lens
         
-        slow, fast = 0, 0
-        max_sub = 0
-        substring = ""
-        while fast < lens:
-            if s[fast] in substring:
-                slow += 1
-                if slow == fast:
-                    fast += 1
-            else:
-                fast += 1
-            substring = s[slow:fast]
-            # print(f"slow={slow}, fast={fast}, subs={substring}")
-            max_sub = max(max_sub, fast-slow)
-        return max_sub
+        # slow, fast = 0, 0
+        # max_sub = 0
+        # substring = ""
+        # while fast < lens:
+        #     if s[fast] in substring:
+        #         slow += 1
+        #         if slow == fast:
+        #             fast += 1
+        #     else:
+        #         fast += 1
+        #     substring = s[slow:fast]
+        #     # print(f"slow={slow}, fast={fast}, subs={substring}")
+        #     max_sub = max(max_sub, fast-slow)
+        # return max_sub
+        seen = {}
+        left = 0
+        max_len = 0
+        for i, char in enumerate(s):
+            if char in seen:
+                left = max(left, seen[char]+1)
+            seen[char] = i
+            max_len = max(max_len, i-left+1)
+            print(f"i={i}, char={char}, left={left}, seen={seen}, maxlen={max_len}")
+        return max_len
         
         
 
