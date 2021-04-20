@@ -10,6 +10,7 @@ from typing import List
 
 class Solution:
     def dailyTemperatures(self, T: List[int]) -> List[int]:
+        # O(N**2)
         # res = []
         # for i in range(len(T)-1):
         #     cn = 1
@@ -25,6 +26,8 @@ class Solution:
         #     res.append(cn)
         # res.append(0)
         # return res
+
+        # 单调栈 O(N)
         res = [0]*len(T)
         stack = []
         for i in range(len(T)):
