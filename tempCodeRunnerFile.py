@@ -1,2 +1,4 @@
-if dp[i] == 0:
-                return 0
+t = 0
+        # res = []
+        # while cnt < k:
+           
