@@ -55,9 +55,8 @@ class Solution:
         for f, wl in reverse_counter:
             tmp = k - len(res)
             res.extend(wl[:tmp])
-        
-
-            
+            if len(res)>= k:
+                break 
         return res
 
 
